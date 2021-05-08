@@ -6,6 +6,7 @@ public class Noeud {
     public Noeud(boolean max, int matrice[][]){
         this.max=max;
         this.matrice =matrice;
+        this.evaluer();
     }
     public int getH(){
         return h;
@@ -147,6 +148,17 @@ public class Noeud {
             }
         }
         return piece_ligne;
+    }
+    public void evaluer(){
+        this.h=-2*this.troisPionsAlignesLigne(false)
+        + this.troisPionsAlignesLigne(true)
+        -2*this.troisPionsAlignesColonne(false)
+        +this.troisPionsAlignesColonne(true)
+        -2*this.troisPionsPossiblesLigne(false)
+        +this.troisPionsPossiblesLigne(true)
+        -2*this.troisPionsPossiblesColonne(false)
+        +this.troisPionsPossiblesColonne(true);
+
     }
 
 
