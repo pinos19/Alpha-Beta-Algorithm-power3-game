@@ -83,6 +83,7 @@ public class Noeud {
     }
     public int troisPionsPossiblesLigne(Boolean typeJoueur){
         int piece,piece_ligne=0,nb_lignes,nb_colonnes;
+        int case_vide;
         nb_lignes  = this.matrice.length;
         nb_colonnes = this.matrice[0].length;
         if(typeJoueur){//joueur max pièce égale à 1
@@ -92,15 +93,21 @@ public class Noeud {
         }
         for (int i=0 ; i<nb_lignes; i++)
         {
+            case_vide=-1;
             for (int j=1 ; j<nb_colonnes; j++)
             {
-                if(this.matrice[i][j-1]==piece && this.matrice[i][j]==piece && this.matrice[i][j+1]==0 && j!=nb_colonnes-1){
+                if(this.matrice[i][j-1]==piece && this.matrice[i][j]==piece && this.matrice[i][j+1]==0 && j!=nb_colonnes-1 && j+1!=case_vide){
+                    case_vide=j+1;
                     piece_ligne = piece_ligne+200;
-                }else if(this.matrice[i][j-1]==0 && this.matrice[i][j]==piece && this.matrice[i][j+1]==piece && j!=nb_colonnes-1){
+                }else if(this.matrice[i][j-1]==piece && this.matrice[i][j]==0 && this.matrice[i][j+1]==piece && j!=nb_colonnes-1 && j!=case_vide){
+                    case_vide=j;
                     piece_ligne = piece_ligne+200;
-                }else if(this.matrice[i][j-1]==0 && this.matrice[i][j]==piece){
+                }else if(this.matrice[i][j-1]==0 && this.matrice[i][j]==piece && this.matrice[i][j+1]==piece && j!=nb_colonnes-1 && j-1!=case_vide){
+                    case_vide=j-1;
+                    piece_ligne = piece_ligne+200;  
+                }else if(this.matrice[i][j-1]==0 && this.matrice[i][j]==piece && j-1!=case_vide){
                     piece_ligne = piece_ligne+30;
-                }else if(this.matrice[i][j-1]==piece && this.matrice[i][j]==0){
+                }else if(this.matrice[i][j-1]==piece && this.matrice[i][j]==0 && j!=case_vide){
                     piece_ligne = piece_ligne+30;
                 }
             }
@@ -109,7 +116,8 @@ public class Noeud {
     }
 
     public int troisPionsPossiblesColonne(Boolean typeJoueur){
-        int piece,piece_ligne=0,nb_lignes,nb_colonnes;
+        int piece,piece_ligne=0,nb_lignes,nb_colonnes,case_vide;
+
         nb_lignes  = this.matrice.length;
         nb_colonnes = this.matrice[0].length;
         if(typeJoueur){//joueur max pièce égale à 1
@@ -119,21 +127,29 @@ public class Noeud {
         }
         for (int i=0 ; i<nb_colonnes; i++)
         {
+            case_vide=-1;
             for (int j=1 ; j<nb_lignes; j++)
             {
-                if(this.matrice[j-1][i]==piece && this.matrice[j][i]==piece && this.matrice[j+1][i]==0 && j!=nb_lignes-1){
+                if(this.matrice[j-1][i]==piece && this.matrice[j][i]==piece && this.matrice[j+1][i]==0 && j!=nb_lignes-1 && j+1!=case_vide){
+                    case_vide = j+1;
                     piece_ligne = piece_ligne+200;
-                }else if(this.matrice[i][j-1]==0 && this.matrice[i][j]==piece && this.matrice[i][j+1]==piece && j!=nb_lignes-1){
+                }else if(this.matrice[j-1][i]==piece && this.matrice[j][i]==0 && this.matrice[j+1][i]==piece && j!=nb_lignes-1 && j!=case_vide){
+                    case_vide = j;
                     piece_ligne = piece_ligne+200;
-                }else if(this.matrice[j-1][i]==0 && this.matrice[j][i]==piece){
+                }else if(this.matrice[j-1][i]==0 && this.matrice[j][i]==piece && this.matrice[j+1][i]==piece && j!=nb_lignes-1 && j-1!=case_vide){
+                    case_vide = j-1;
+                    piece_ligne = piece_ligne+200;
+                }else if(this.matrice[j-1][i]==0 && this.matrice[j][i]==piece && j-1!=case_vide){
                     piece_ligne = piece_ligne+30;
-                }else if(this.matrice[j-1][i]==piece && this.matrice[j][i]==0){
+                }else if(this.matrice[j-1][i]==piece && this.matrice[j][i]==0 && j!=case_vide){
                     piece_ligne = piece_ligne+30;
                 }
             }
         }
         return piece_ligne;
     }
+
+
 
 
 
